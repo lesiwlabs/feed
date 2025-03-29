@@ -36,6 +36,9 @@ func (c *cache) Handler(w http.ResponseWriter, r *http.Request) {
 		func() {
 			c.Lock()
 			defer c.Unlock()
+			if !c.t.IsZero() && time.Since(c.t) <= 5*time.Minute {
+				return
+			}
 			c.buf, c.err = c.f()
 			c.t = time.Now()
 		}()
