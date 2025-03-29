@@ -49,9 +49,10 @@ func groupFeed(group string) ([]byte, error) {
 		buf.WriteString(fmt.Sprintf(`<item>
 <title>%s</title>
 <link>%s</link>
+<pubDate>%s</pubDate>
 <description>%s</description>
 </item>
-`, e.Subject, e.URL, e.Body))
+`, e.Subject, e.URL, e.Date.Format(time.RFC3339), e.Body))
 	}
 	if err != nil {
 		return nil, fmt.Errorf("could not convert row data: %w", err)
