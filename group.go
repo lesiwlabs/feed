@@ -50,7 +50,7 @@ func groupFeed(group string) ([]byte, error) {
 <title>%s</title>
 <link>%s</link>
 <pubDate>%s</pubDate>
-<description>%s</description>
+<description><![CDATA[%s]]></description>
 </item>
 `, e.Subject, e.URL, e.Date.Format(time.RFC822), e.Body))
 	}
