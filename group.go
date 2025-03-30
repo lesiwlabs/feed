@@ -39,6 +39,8 @@ func groupFeed(group string) ([]byte, error) {
 <rss version="2.0">
 <channel>
 <title>%s</title>
+<link>https://groups.google.com/g/golang-announce</link>
+<description>Important Go announcements.</description>
 `, group))
 	rows, err := db.Query(ctx, stmt.GroupEntries)
 	if err != nil {
