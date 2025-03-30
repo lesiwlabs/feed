@@ -54,7 +54,7 @@ func groupFeed(group string) ([]byte, error) {
 <pubDate>%s</pubDate>
 <description><![CDATA[%s]]></description>
 </item>
-`, e.Subject, e.URL, e.Date.Format(time.RFC822), e.Body))
+`, e.Subject, e.URL, e.Date.Format(time.RFC1123Z), e.Body))
 	}
 	if err != nil {
 		return nil, fmt.Errorf("could not convert row data: %w", err)
