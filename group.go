@@ -51,10 +51,11 @@ func groupFeed(group string) ([]byte, error) {
 		buf.WriteString(fmt.Sprintf(`<item>
 <title>%s</title>
 <link>%s</link>
+<guid>%s</guid>
 <pubDate>%s</pubDate>
 <description><![CDATA[%s]]></description>
 </item>
-`, e.Subject, e.URL, e.Date.Format(time.RFC1123Z), e.Body))
+`, e.Subject, e.URL, e.URL, e.Date.Format(time.RFC1123Z), e.Body))
 	}
 	if err != nil {
 		return nil, fmt.Errorf("could not convert row data: %w", err)
