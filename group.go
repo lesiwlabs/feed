@@ -20,6 +20,9 @@ import (
 var reDate = regexp.MustCompile(
 	`>([A-Za-z]+ [0-9]+, [0-9]+, [0-9]+:[0-9]+:[0-9]+ [A-Za-z]+)[^A-Za-z]`,
 )
+var reTime = regexp.MustCompile(
+	`<span class="[^"]+">([0-9]+:[0-9]+\s[A-Za-z]+)\s\([^)]+\)\s?<\/span>`,
+)
 
 type entry struct {
 	URL     string
@@ -172,10 +175,19 @@ func loadEntry(url string, e *entry) error {
 
 	m := reDate.FindSubmatch(page)
 	if len(m) < 2 {
-		parseErrs = append(parseErrs, errors.New("could not find entry date"))
-		goto body
+		m = reTime.FindSubmatch(page)
+		if len(m) < 2 {
+			parseErrs = append(parseErrs,
+				errors.New("could not find entry date"))
+			goto body
+		}
+		e.Date, err = time.Parse("3:04 PM", string(m[1]))
+		now := time.Now()
+		e.Date = time.Date(now.Year(), now.Month(), now.Day(),
+			e.Date.Hour(), e.Date.Minute(), 0, 0, now.Location())
+	} else {
+		e.Date, err = time.Parse("Jan 2, 2006, 3:04:05 PM", string(m[1]))
 	}
-	e.Date, err = time.Parse("Jan 2, 2006, 3:04:05 PM", string(m[1]))
 	if err != nil {
 		parseErrs = append(parseErrs, fmt.Errorf(
 			"could not parse entry date: %w", err))
