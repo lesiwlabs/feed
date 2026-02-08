@@ -14,6 +14,7 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"golang.org/x/net/html"
+
 	"labs.lesiw.io/feed/internal/stmt"
 )
 
@@ -160,7 +161,7 @@ func loadEntry(url string, e *entry) error {
 	if err != nil {
 		return fmt.Errorf("could not read body: %w", err)
 	}
-	r.Body.Close()
+	_ = r.Body.Close()
 	// Normalize spaces.
 	var b bytes.Buffer
 	for _, r := range string(page) {

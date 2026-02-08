@@ -15,6 +15,7 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	_ "golang.org/x/crypto/x509roots/fallback"
+
 	"labs.lesiw.io/ctr"
 	"lesiw.io/defers"
 	"lesiw.io/plain"

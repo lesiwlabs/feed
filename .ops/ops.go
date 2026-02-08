@@ -19,7 +19,7 @@ type Ops struct {
 
 func main() {
 	if len(os.Args) < 2 {
-		os.Args = append(os.Args, "build")
+		os.Args = append(os.Args, "check")
 	}
 	goapp.Name = "feed"
 	o := Ops{}
